@@ -1,0 +1,74 @@
+/* Các nút đáp án */
+.option-button {
+  padding: 15px;
+  background-color: #444; /* Nền xám */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.option-button:hover {
+  background-color: #555; /* Màu xám sáng hơn khi hover */
+}
+
+.option-button.selected {
+  background-color: #007bff; /* Màu xanh dương cho đáp án được chọn */
+  color: white;
+}
+
+.option-button.correct {
+  background-color: green; /* Màu xanh lá cây cho đáp án đúng */
+  color: white;
+}
+
+.option-button.incorrect {
+  background-color: yellow; /* Màu vàng cho đáp án sai */
+  color: black;
+}
+
+.option-button:disabled {
+  cursor: not-allowed; /* Không cho phép chọn lại sau khi Submit */
+}
+
+/* Nút Submit và Next */
+.submit-button,
+.next-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.submit-button:hover,
+.next-button:hover {
+  background-color: #0056b3; /* Màu xanh đậm hơn khi hover */
+}
+
+.submit-button:disabled {
+  background-color: #888; /* Màu xám khi không thể Submit */
+  cursor: not-allowed;
+}
+
+/* Thanh tiến trình */
+.progress-bar {
+  width: 100%;
+  max-width: 600px;
+  height: 10px;
+  background-color: #555;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #007bff;
+  transition: width 0.3s ease-in-out;
+}

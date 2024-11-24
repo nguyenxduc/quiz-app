@@ -1,0 +1,140 @@
+/* Reset Styles */
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li,
+input,
+button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Tổng quan */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff; /* Xanh nhạt */
+  color: #333;
+  line-height: 1.5;
+  padding: 10px;
+}
+
+/* Navbar */
+nav {
+  display: flex;
+  justify-content: center;
+  background-color: #007bff; /* Xanh đậm */
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 15px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+nav a:hover {
+  background-color: #0056b3; /* Xanh tối hơn khi hover */
+}
+
+nav a.active {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+/* Main Content */
+h1,
+h2 {
+  color: #007bff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Quiz Section */
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #c0c0c0;
+  cursor: not-allowed;
+}
+
+/* Answer Options */
+button.answer-option {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 15px;
+  text-align: left;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button.answer-option.correct {
+  background-color: green;
+  color: white;
+  border-color: green;
+}
+
+button.answer-option.incorrect {
+  background-color: yellow;
+  color: black;
+  border-color: yellow;
+}
+
+button.answer-option:disabled {
+  cursor: not-allowed;
+}
+
+/* Import and Export */
+textarea,
+input[type="text"],
+input[type="file"] {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #f9fcff;
+  font-size: 16px;
+}
+
+textarea {
+  height: 150px;
+}
+
+input[type="file"] {
+  border: none;
+}
+
+form button {
+  margin-top: 20px;
+}
