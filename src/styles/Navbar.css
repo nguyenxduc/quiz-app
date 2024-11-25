@@ -1,0 +1,26 @@
+nav {
+  display: flex;
+  justify-content: center;
+  background-color: #22a0dd; /* Xanh đậm */
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 15px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+nav a:hover {
+  background-color: #006ca9; /* Xanh tối hơn khi hover */
+}
+
+nav a.active {
+  background-color: #006ca9;
+  color: #fff;
+}

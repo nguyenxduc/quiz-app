@@ -5,11 +5,12 @@
   "keywords": [],
   "main": "src/index.tsx",
   "dependencies": {
+    "exceljs": "^4.4.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-router-dom": "7.0.1",
     "react-scripts": "^5.0.0",
-    "xlsx": "0.18.5",
-    "react-router-dom": "7.0.1"
+    "xlsx": "0.18.5"
   },
   "devDependencies": {
     "@types/react": "18.2.38",

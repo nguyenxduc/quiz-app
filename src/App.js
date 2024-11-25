@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Quiz from "./components/Quiz";
-import ImportQuestions from "./components/ImportQuestions";
-import ExportQuestions from "./components/ExportQuestions";
-import { defaultQuestions } from "./utils/questionUtils";
+import ImportQuestions from "./components/ImportQuestions.jsx";
+import ExportQuestions from "./components/ExportQuestions.jsx";
 import "./styles/App.css";
 const App = () => {
-  const [questions, setQuestions] = useState(defaultQuestions);
+  const [questions, setQuestions] = useState(() => {
+    // Lấy dữ liệu từ Local Storage nếu có
+    const savedQuestions = localStorage.getItem("questions");
+    return savedQuestions ? JSON.parse(savedQuestions) : [];
+  });
+
+  useEffect(() => {
+    // Cập nhật Local Storage mỗi khi `questions` thay đổi
+    localStorage.setItem("questions", JSON.stringify(questions));
+  }, [questions]);
 
   return (
     <Router>
