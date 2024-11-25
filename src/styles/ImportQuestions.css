@@ -1,15 +1,14 @@
-
 .import-question-container {
-  background-color: #f0f8ff; 
+  background-color: #f0f8ff;
 }
 
-.form-container {
+.form-container,
+.import-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Nút Add Question */
 .add-button {
   background-color: #007bff;
   color: white;
@@ -23,7 +22,7 @@
 }
 
 .add-button:hover {
-  background-color: #006ca9; 
+  background-color: #006ca9;
 }
 
 .addQuestionButtonSection {
@@ -35,7 +34,7 @@
 .clear-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #dc3545; 
+  background-color: #dc3545;
   color: white;
   border: none;
   border-radius: 5px;
@@ -45,7 +44,7 @@
 }
 
 .clear-button:hover {
-  background-color: #c82333; 
+  background-color: #c82333;
 }
 
 textarea,
@@ -68,4 +67,20 @@ textarea {
 
 form button {
   margin-top: 20px;
+}
+
+.import-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.import-button:hover {
+  background-color: #006ca9;
 }

@@ -11,6 +11,7 @@ const ImportQuestions = ({ setQuestions }) => {
     option4: "",
     correctAnswer: "",
   });
+  const [uploadedQuestions, setUploadedQuestions] = useState([]); // Lưu câu hỏi từ file
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -39,10 +40,15 @@ const ImportQuestions = ({ setQuestions }) => {
         correctAnswer: row.correctAnswer,
       }));
 
-      setQuestions((prev) => [...prev, ...formattedData]);
+      setUploadedQuestions(formattedData);
     };
 
     reader.readAsBinaryString(file);
+  };
+
+  const handleImportQuestions = () => {
+    setQuestions((prev) => [...prev, ...uploadedQuestions]);
+    setUploadedQuestions([]);
   };
 
   const handleFormSubmit = () => {
@@ -79,10 +85,16 @@ const ImportQuestions = ({ setQuestions }) => {
 
   return (
     <div className="import-questions-container">
-      <h1>Import Questions</h1>
-      <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
-      <h1>Or Add Manually</h1>
+      <div className="import-container">
+        <h1>Import Questions</h1>
+        <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
+        <button className="import-button" onClick={handleImportQuestions}>
+          Import Questions
+        </button>
+      </div>
+
       <div className="form-container">
+        <h1>Or Add Manually</h1>
         <input
           type="text"
           placeholder="Question"
