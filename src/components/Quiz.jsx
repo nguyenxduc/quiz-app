@@ -96,7 +96,7 @@ const Quiz = ({ questions }) => {
   };
   if (!questions || questions.length === 0) {
     return (
-      <div className="quiz-container">
+      <div className="no-quiz-container">
         <h1>No questions available</h1>
         <p>Please add or import questions to start the quiz!</p>
       </div>
@@ -125,7 +125,7 @@ const Quiz = ({ questions }) => {
   return (
     <div className="quiz-container">
       <div className="quiz-header">
-        <h2>The BlooQuiz</h2>
+        <h2>The Blue</h2>
       </div>
       <div className="quiz-body">
         <p className="question-progress">
