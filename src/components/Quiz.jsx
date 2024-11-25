@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as XLSX from "xlsx"; // Thêm thư viện XLSX
+import * as XLSX from "xlsx";
 import "../styles/Quiz.css";
 import ExcelJS from "exceljs";
 const Quiz = ({ questions }) => {
@@ -7,7 +7,7 @@ const Quiz = ({ questions }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
-  const [userAnswers, setUserAnswers] = useState([]); // Lưu đáp án người dùng chọn
+  const [userAnswers, setUserAnswers] = useState([]);
 
   const handleAnswerSelect = (option) => {
     setSelectedAnswer(option);
@@ -47,7 +47,6 @@ const Quiz = ({ questions }) => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Quiz Results");
 
-    // Thêm tiêu đề
     worksheet.columns = [
       { header: "Question", key: "question", width: 30 },
       { header: "Option 1", key: "option1", width: 15 },
@@ -56,7 +55,6 @@ const Quiz = ({ questions }) => {
       { header: "Option 4", key: "option4", width: 15 },
     ];
 
-    // Thêm dữ liệu
     userAnswers.forEach((answer) => {
       const row = worksheet.addRow({
         question: answer.question,
@@ -66,28 +64,25 @@ const Quiz = ({ questions }) => {
         option4: answer.options[3],
       });
 
-      // Tô màu cho đáp án đúng
       const correctAnswerIndex =
-        answer.options.indexOf(answer.correctAnswer) + 2; // Xác định cột đáp án đúng
+        answer.options.indexOf(answer.correctAnswer) + 2;
       row.getCell(correctAnswerIndex).fill = {
         type: "pattern",
         pattern: "solid",
-        fgColor: { argb: "22A0DD" }, // Xanh dương
+        fgColor: { argb: "22A0DD" },
       };
 
-      // Nếu người dùng chọn sai, tô màu cam cho đáp án đã chọn
       if (answer.selectedAnswer !== answer.correctAnswer) {
         const selectedAnswerIndex =
-          answer.options.indexOf(answer.selectedAnswer) + 2; // Xác định cột đáp án chọn sai
+          answer.options.indexOf(answer.selectedAnswer) + 2;
         row.getCell(selectedAnswerIndex).fill = {
           type: "pattern",
           pattern: "solid",
-          fgColor: { argb: "FFA84C" }, // Cam
+          fgColor: { argb: "FFA84C" },
         };
       }
     });
 
-    // Xuất file Excel
     const buffer = await workbook.xlsx.writeBuffer();
     const blob = new Blob([buffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

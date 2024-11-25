@@ -145,12 +145,12 @@
 
 .quiz-completed {
   display: flex;
-  flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
-  align-items: center; /* Căn giữa theo chiều ngang */
-  justify-content: center; /* Căn giữa theo chiều dọc */
-  height: 80vh; /* Chiều cao toàn màn hình */
-  background-color: #f0f8ff; /* Nền xanh nhạt */
-  font-family: Arial, sans-serif; /* Phông chữ */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  background-color: #f0f8ff;
+  font-family: Arial, sans-serif;
 }
 
 .quiz-completed h1 {
@@ -180,5 +180,5 @@
 }
 
 .export-button:hover {
-  background-color: #006ca9; /* Màu xanh đậm hơn khi hover */
+  background-color: #006ca9;
 }

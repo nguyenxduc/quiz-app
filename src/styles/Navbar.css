@@ -1,7 +1,7 @@
 nav {
   display: flex;
   justify-content: center;
-  background-color: #22a0dd; /* Xanh đậm */
+  background-color: #22a0dd;
   padding: 15px;
   margin-bottom: 20px;
 }
@@ -17,7 +17,7 @@ nav a {
 }
 
 nav a:hover {
-  background-color: #006ca9; /* Xanh tối hơn khi hover */
+  background-color: #006ca9;
 }
 
 nav a.active {

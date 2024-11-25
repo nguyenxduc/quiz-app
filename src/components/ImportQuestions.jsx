@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import "../styles/ImportQuestions.css"; // Nếu có file CSS riêng
+import "../styles/ImportQuestions.css";
 
 const ImportQuestions = ({ setQuestions }) => {
   const [form, setForm] = useState({
@@ -12,7 +12,6 @@ const ImportQuestions = ({ setQuestions }) => {
     correctAnswer: "",
   });
 
-  // Hàm xử lý khi tải file Excel
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -46,7 +45,6 @@ const ImportQuestions = ({ setQuestions }) => {
     reader.readAsBinaryString(file);
   };
 
-  // Hàm xử lý khi nhập tay
   const handleFormSubmit = () => {
     if (
       !form.question ||

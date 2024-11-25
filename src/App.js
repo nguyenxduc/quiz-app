@@ -7,13 +7,11 @@ import ExportQuestions from "./components/ExportQuestions.jsx";
 import "./styles/App.css";
 const App = () => {
   const [questions, setQuestions] = useState(() => {
-    // Lấy dữ liệu từ Local Storage nếu có
     const savedQuestions = localStorage.getItem("questions");
     return savedQuestions ? JSON.parse(savedQuestions) : [];
   });
 
   useEffect(() => {
-    // Cập nhật Local Storage mỗi khi `questions` thay đổi
     localStorage.setItem("questions", JSON.stringify(questions));
   }, [questions]);
 

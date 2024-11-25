@@ -1,6 +1,6 @@
-/* Tổng thể container */
+
 .import-question-container {
-  background-color: #f0f8ff; /* Nền xanh nhạt */
+  background-color: #f0f8ff; 
 }
 
 .form-container {
@@ -23,7 +23,7 @@
 }
 
 .add-button:hover {
-  background-color: #006ca9; /* Màu nền khi hover */
+  background-color: #006ca9; 
 }
 
 .addQuestionButtonSection {
@@ -35,7 +35,7 @@
 .clear-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #dc3545; /* Màu đỏ */
+  background-color: #dc3545; 
   color: white;
   border: none;
   border-radius: 5px;
@@ -45,7 +45,7 @@
 }
 
 .clear-button:hover {
-  background-color: #c82333; /* Màu đỏ đậm hơn khi hover */
+  background-color: #c82333; 
 }
 
 textarea,
