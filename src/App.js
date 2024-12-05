@@ -5,6 +5,7 @@ import Quiz from "./components/Quiz";
 import ImportQuestions from "./components/ImportQuestions.jsx";
 import ExportQuestions from "./components/ExportQuestions.jsx";
 import "./styles/App.css";
+import Questions from "./components/Questions.jsx";
 const App = () => {
   const [questions, setQuestions] = useState(() => {
     const savedQuestions = localStorage.getItem("questions");
@@ -28,6 +29,16 @@ const App = () => {
           path="/export"
           element={<ExportQuestions questions={questions} />}
         />
+
+        <Route
+          path="/questions"
+          element={
+            <Questions
+              questions={questions}
+              setQuestions={setQuestions}
+            ></Questions>
+          }
+        ></Route>
       </Routes>
     </Router>
   );

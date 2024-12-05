@@ -125,7 +125,7 @@ const Quiz = ({ questions }) => {
   return (
     <div className="quiz-container">
       <div className="quiz-header">
-        <h2>The Blue</h2>
+        <h2>The Blue Quiz</h2>
       </div>
       <div className="quiz-body">
         <p className="question-progress">

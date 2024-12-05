@@ -3,11 +3,6 @@ import * as XLSX from "xlsx";
 import "../styles/ExportQuestions.css";
 const ExportQuestions = ({ questions }) => {
   const handleExport = () => {
-    if (!questions || questions.length === 0) {
-      alert("No questions available to export!");
-      return;
-    }
-
     const formattedQuestions = questions.map((q) => ({
       Question: q.question,
       "Option 1": q.options[0],

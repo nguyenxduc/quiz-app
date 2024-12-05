@@ -11,10 +11,12 @@ const ImportQuestions = ({ setQuestions }) => {
     option4: "",
     correctAnswer: "",
   });
-  const [uploadedQuestions, setUploadedQuestions] = useState([]); // Lưu câu hỏi từ file
+  const [uploadedQuestions, setUploadedQuestions] = useState([]);
+  const fileInputRef = React.createRef();
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
+  const handleImportQuestions = () => {
+    const file = fileInputRef.current.files[0];
+
     const reader = new FileReader();
 
     reader.onload = (event) => {
@@ -41,16 +43,13 @@ const ImportQuestions = ({ setQuestions }) => {
       }));
 
       setUploadedQuestions(formattedData);
+
+      setQuestions((prev) => [...prev, ...formattedData]);
+      fileInputRef.current.value = "";
     };
 
     reader.readAsBinaryString(file);
   };
-
-  const handleImportQuestions = () => {
-    setQuestions((prev) => [...prev, ...uploadedQuestions]);
-    setUploadedQuestions([]);
-  };
-
   const handleFormSubmit = () => {
     if (
       !form.question ||
@@ -79,20 +78,15 @@ const ImportQuestions = ({ setQuestions }) => {
     });
   };
 
-  const handleClearQuestions = () => {
-    setQuestions([]);
-  };
-
   return (
     <div className="import-questions-container">
       <div className="import-container">
         <h1>Import Questions</h1>
-        <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
+        <input ref={fileInputRef} type="file" accept=".xlsx, .xls" />
         <button className="import-button" onClick={handleImportQuestions}>
           Import Questions
         </button>
       </div>
-
       <div className="form-container">
         <h1>Or Add Manually</h1>
         <input
@@ -133,9 +127,6 @@ const ImportQuestions = ({ setQuestions }) => {
         />
         <button className="add-button" onClick={handleFormSubmit}>
           Add Question
-        </button>
-        <button className="clear-button" onClick={handleClearQuestions}>
-          Clear All Questions
         </button>
       </div>
     </div>
