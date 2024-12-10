@@ -1,5 +1,4 @@
 .questions-container {
-  background-color: #f8f8f8;
   min-height: 100vh;
 }
 
@@ -38,7 +37,7 @@
 }
 
 .question-text {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
   margin-bottom: 15px;
   line-height: 1.4;
@@ -68,7 +67,7 @@
 }
 
 .option-text {
-  font-size: 16px;
+  font-size: 20px;
   margin: 0;
   color: #333;
 }
@@ -83,10 +82,12 @@
   font-weight: bold;
 }
 
-.delete-button {
+.delete-button,
+.edit-button {
   background-color: #dc3545;
   color: white;
   padding: 10px 20px;
+  margin-right: 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -96,4 +97,98 @@
 
 .delete-button:hover {
   background-color: #c82333;
+}
+
+.question-content {
+  flex: 1;
+}
+
+.question-text {
+  margin-bottom: 10px;
+}
+
+.options-container {
+  margin-bottom: 10px;
+}
+
+.option-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.option-icon {
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.correct-answer {
+  font-weight: bold;
+  color: #333;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  opacity: 0.8;
+}
+
+.edit-button {
+  background-color: #4caf50;
+}
+.edit-question-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.edit-modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.save-button,
+.cancel-button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.save-button:hover,
+.cancel-button:hover {
+  opacity: 0.8;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+}
+
+.edit-question-form .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
 }

@@ -61,9 +61,21 @@ const ImportQuestions = ({ setQuestions }) => {
     )
       return;
 
+    const options = [form.option1, form.option2, form.option3, form.option4];
+    if (!options.includes(form.correctAnswer)) {
+      alert("The correct answer must match one of the options.");
+      return;
+    }
+
+    const uniqueOptions = new Set(options);
+    if (uniqueOptions.size !== options.length) {
+      alert("Options cannot be the same.");
+      return;
+    }
+
     const newQuestion = {
       question: form.question,
-      options: [form.option1, form.option2, form.option3, form.option4],
+      options: options,
       correctAnswer: form.correctAnswer,
     };
 
