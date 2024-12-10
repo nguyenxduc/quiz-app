@@ -7,6 +7,32 @@ const Questions = ({ questions, setQuestions }) => {
   const [newOptions, setNewOptions] = useState([]);
   const [newCorrectAnswer, setNewCorrectAnswer] = useState("");
 
+  const randomizeQuestions = () => {
+    const shuffledQuestions = [...questions];
+
+    for (let i = shuffledQuestions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledQuestions[i], shuffledQuestions[j]] = [
+        shuffledQuestions[j],
+        shuffledQuestions[i],
+      ];
+    }
+
+    shuffledQuestions.forEach((question, index) => {
+      const shuffledOptions = [...question.options];
+      for (let i = shuffledOptions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledOptions[i], shuffledOptions[j]] = [
+          shuffledOptions[j],
+          shuffledOptions[i],
+        ];
+      }
+      shuffledQuestions[index].options = shuffledOptions;
+    });
+
+    setQuestions(shuffledQuestions);
+  };
+
   const handleDelete = (index) => {
     const updatedQuestions = questions.filter((_, i) => i !== index);
     setQuestions(updatedQuestions);
@@ -72,6 +98,12 @@ const Questions = ({ questions, setQuestions }) => {
         <button className="clear-button" onClick={handleClearQuestions}>
           Delete All Questions
         </button>
+        <button
+          className="randomize-questions-button"
+          onClick={randomizeQuestions}
+        >
+          Randomize Questions and Options Order
+        </button>
         <div className="questions-list">
           {questions.map((question, currentQuestionIndex) => (
             <div key={currentQuestionIndex} className="question-item">
@@ -109,7 +141,6 @@ const Questions = ({ questions, setQuestions }) => {
           ))}
         </div>
 
-        {/* Edit Question Modal */}
         {editingIndex !== null && (
           <div className="edit-question-form">
             <div

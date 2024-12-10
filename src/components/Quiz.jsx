@@ -1,13 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 import "../styles/Quiz.css";
 import ExcelJS from "exceljs";
+
+import { useHistory } from "react-router-dom";
+
 const Quiz = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
+  const [isQuizStarted, setIsQuizStarted] = useState(false);
+  const [timer, setTimer] = useState(10);
+
+  useEffect(() => {
+    if (isQuizStarted && timer > 0 && !showResult) {
+      const interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+    if (timer === 0 && !showResult) {
+      handleSubmit();
+    }
+  }, [timer, isQuizStarted, showResult]);
 
   const handleAnswerSelect = (option) => {
     setSelectedAnswer(option);
@@ -33,6 +50,7 @@ const Quiz = ({ questions }) => {
     setShowResult(false);
     setSelectedAnswer(null);
     setCurrentQuestionIndex((prev) => prev + 1);
+    setTimer(10);
   };
 
   const handleRestart = () => {
@@ -41,6 +59,8 @@ const Quiz = ({ questions }) => {
     setShowResult(false);
     setScore(0);
     setUserAnswers([]);
+    setTimer(10);
+    setIsQuizStarted(false);
   };
 
   const handleExportResults = async () => {
@@ -94,6 +114,7 @@ const Quiz = ({ questions }) => {
     a.click();
     window.URL.revokeObjectURL(url);
   };
+
   if (!questions || questions.length === 0) {
     return (
       <div className="no-quiz-container">
@@ -128,64 +149,87 @@ const Quiz = ({ questions }) => {
         <h2>The Blue Quiz</h2>
       </div>
       <div className="quiz-body">
-        <p className="question-progress">
-          Question{" "}
-          <span className="current-index">{currentQuestionIndex + 1}</span> /{" "}
-          {questions.length}
-        </p>
-        <div className="progress-bar">
-          <div
-            className="progress-bar-fill"
-            style={{
-              width: `${
-                ((currentQuestionIndex + 1) / questions.length) * 100
-              }%`,
-            }}
-          ></div>
-        </div>
-        <div className="question-section">
-          <p className="question">{questions[currentQuestionIndex].question}</p>
-          <div className="options-container">
-            {questions[currentQuestionIndex].options.map((option, index) => (
-              <button
-                key={index}
-                className={`option-button ${
-                  selectedAnswer === option ? "selected" : ""
-                } ${
-                  showResult &&
-                  option === questions[currentQuestionIndex].correctAnswer
-                    ? "correct"
-                    : showResult && selectedAnswer === option
-                    ? "incorrect"
-                    : ""
-                }`}
-                onClick={() => handleAnswerSelect(option)}
-                disabled={showResult}
-              >
-                {option}
-              </button>
-            ))}
+        {!isQuizStarted ? (
+          <div className="start-quiz">
+            <button
+              className="start-button"
+              onClick={() => setIsQuizStarted(true)}
+            >
+              Start
+            </button>
           </div>
-        </div>
-        <div className="quiz-footer">
-          {showResult ? (
-            <button
-              className="next-button"
-              onClick={handleNext}
-              disabled={currentQuestionIndex >= questions.length}
-            >
-              {currentQuestionIndex + 1 < questions.length ? "Next" : "Finish"}
-            </button>
-          ) : (
-            <button
-              className="submit-button"
-              onClick={handleSubmit}
-              disabled={!selectedAnswer}
-            >
-              Submit
-            </button>
-          )}
-        </div>
+        ) : (
+          <>
+            <p className="question-progress">
+              Question{" "}
+              <span className="current-index">{currentQuestionIndex + 1}</span>{" "}
+              / {questions.length}
+            </p>
+            <div className="progress-bar">
+              <div
+                className="progress-bar-fill"
+                style={{
+                  width: `${
+                    ((currentQuestionIndex + 1) / questions.length) * 100
+                  }%`,
+                }}
+              ></div>
+            </div>
+            <p className="timer">
+              Time Left:<strong> {timer} </strong> seconds
+            </p>
+
+            <div className="question-section">
+              <p className="question">
+                {questions[currentQuestionIndex].question}
+              </p>
+              <div className="options-container">
+                {questions[currentQuestionIndex].options.map(
+                  (option, index) => (
+                    <button
+                      key={index}
+                      className={`option-button ${
+                        selectedAnswer === option ? "selected" : ""
+                      } ${
+                        showResult &&
+                        option === questions[currentQuestionIndex].correctAnswer
+                          ? "correct"
+                          : showResult && selectedAnswer === option
+                          ? "incorrect"
+                          : ""
+                      }`}
+                      onClick={() => handleAnswerSelect(option)}
+                      disabled={showResult}
+                    >
+                      {option}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+            <div className="quiz-footer">
+              {showResult ? (
+                <button
+                  className="next-button"
+                  onClick={handleNext}
+                  disabled={currentQuestionIndex >= questions.length}
+                >
+                  {currentQuestionIndex + 1 < questions.length
+                    ? "Next"
+                    : "Finish"}
+                </button>
+              ) : (
+                <button
+                  className="submit-button"
+                  onClick={handleSubmit}
+                  disabled={!selectedAnswer}
+                >
+                  Submit
+                </button>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
