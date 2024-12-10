@@ -1,7 +1,25 @@
 import React, { useState, useEffect } from "react";
-
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import "../styles/Quiz.css";
 import ExcelJS from "exceljs";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Quiz = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -11,6 +29,7 @@ const Quiz = ({ questions }) => {
   const [userAnswers, setUserAnswers] = useState([]);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [timer, setTimer] = useState(10);
+  const [showStatistics, setShowStatistics] = useState(false);
 
   useEffect(() => {
     if (
@@ -42,8 +61,6 @@ const Quiz = ({ questions }) => {
   const handleSubmit = () => {
     const isCorrect =
       questions[currentQuestionIndex].correctAnswer === selectedAnswer;
-
-    console.log(selectedAnswer);
     setUserAnswers((prev) => [
       ...prev,
       {
@@ -51,6 +68,8 @@ const Quiz = ({ questions }) => {
         options: questions[currentQuestionIndex].options,
         correctAnswer: questions[currentQuestionIndex].correctAnswer,
         selectedAnswer: selectedAnswer,
+        timeSpent: 10 - timer, // time spent on the question
+        isCorrect: isCorrect,
       },
     ]);
     if (isCorrect) setScore(score + 1);
@@ -72,6 +91,7 @@ const Quiz = ({ questions }) => {
     setUserAnswers([]);
     setTimer(10);
     setIsQuizStarted(false);
+    setShowStatistics(false);
   };
 
   const handleExportResults = async () => {
@@ -135,6 +155,100 @@ const Quiz = ({ questions }) => {
     );
   }
 
+  const correctAnswers = userAnswers.filter(
+    (answer) => answer.isCorrect
+  ).length;
+  const incorrectAnswers = userAnswers.length - correctAnswers;
+  const averageTimeSpent = userAnswers.length
+    ? userAnswers.reduce((acc, answer) => acc + answer.timeSpent, 0) /
+      userAnswers.length
+    : 0;
+
+  const dataForStatistics = {
+    labels: ["Correct Answers", "Incorrect Answers"],
+    datasets: [
+      {
+        label: "Results",
+        data: [correctAnswers, incorrectAnswers],
+        backgroundColor: ["green", "red"],
+        borderColor: ["darkgreen", "darkred"],
+        borderWidth: 1,
+        barPercentage: 1.0, // Các cột chiếm tối đa không gian của nhóm
+        categoryPercentage: 0.2, // Giảm mạnh khoảng cách giữa các nhóm
+        barThickness: "flex", // Để tự động căn chỉnh kích thước cột
+      },
+    ],
+  };
+
+  const optionsForStatistics = {
+    responsive: true,
+    layout: {
+      padding: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      }, // Loại bỏ padding mặc định để cột gần nhau hơn
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: "Quiz Statistics",
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          stepSize: 1,
+          precision: 0,
+        },
+        beginAtZero: true,
+      },
+      x: {
+        ticks: {
+          autoSkip: false,
+        },
+      },
+    },
+  };
+
+  if (showStatistics) {
+    return (
+      <div className="statistics-container">
+        <h2>Statistics</h2>
+        <div className="chart-container">
+          <Bar data={dataForStatistics} options={optionsForStatistics} />
+        </div>
+        <div className="summary">
+          <p>
+            <strong>Correct Answers:</strong> {correctAnswers} /{" "}
+            {userAnswers.length}
+          </p>
+          <p>
+            <strong>Incorrect Answers:</strong> {incorrectAnswers} /{" "}
+            {userAnswers.length}
+          </p>
+          <p>
+            <strong>Average Time Spent:</strong> {averageTimeSpent.toFixed(2)}{" "}
+            seconds
+          </p>
+        </div>
+
+        <div>
+          <button className="restart-button" onClick={handleRestart}>
+            Back to Quiz
+          </button>
+          <button className="restart-button" onClick={handleExportResults}>
+            Export Results
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (currentQuestionIndex >= questions.length) {
     return (
       <div className="quiz-completed">
@@ -146,8 +260,11 @@ const Quiz = ({ questions }) => {
           <button className="restart-button" onClick={handleRestart}>
             Restart Quiz
           </button>
-          <button className="export-button" onClick={handleExportResults}>
-            Export Results
+          <button
+            className="restart-button"
+            onClick={() => setShowStatistics(true)}
+          >
+            View Statistics
           </button>
         </div>
       </div>
