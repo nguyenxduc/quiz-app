@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import * as XLSX from "xlsx";
+
 import "../styles/Quiz.css";
 import ExcelJS from "exceljs";
-
-import { useHistory } from "react-router-dom";
 
 const Quiz = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -15,7 +13,12 @@ const Quiz = ({ questions }) => {
   const [timer, setTimer] = useState(10);
 
   useEffect(() => {
-    if (isQuizStarted && timer > 0 && !showResult) {
+    if (
+      isQuizStarted &&
+      timer > 0 &&
+      !showResult &&
+      currentQuestionIndex < questions.length
+    ) {
       const interval = setInterval(() => {
         setTimer((prev) => prev - 1);
       }, 1000);
@@ -24,7 +27,13 @@ const Quiz = ({ questions }) => {
     if (timer === 0 && !showResult) {
       handleSubmit();
     }
-  }, [timer, isQuizStarted, showResult]);
+  }, [
+    timer,
+    isQuizStarted,
+    showResult,
+    currentQuestionIndex,
+    questions.length,
+  ]);
 
   const handleAnswerSelect = (option) => {
     setSelectedAnswer(option);
@@ -33,6 +42,8 @@ const Quiz = ({ questions }) => {
   const handleSubmit = () => {
     const isCorrect =
       questions[currentQuestionIndex].correctAnswer === selectedAnswer;
+
+    console.log(selectedAnswer);
     setUserAnswers((prev) => [
       ...prev,
       {
